@@ -14,8 +14,8 @@ if (navigator.userAgent.match(/iPhone/i) != null) {
     }
 }
 
-// In the CSS file we set the ms-viewport to be consistent with the device dimensions, 
-// which is necessary for correct functionality of immersive IE. 
+// In the CSS file we set the ms-viewport to be consistent with the device dimensions,
+// which is necessary for correct functionality of immersive IE.
 // However, for Windows 8 phone we need to reset the ms-viewport's dimension to its original
 // values (auto), otherwise the viewport dimensions will be wrong for Windows 8 phone.
 // Windows 8 phone has agent string 'IEMobile 10.0'
@@ -54,7 +54,7 @@ function getStyle(element, styleProp) {
     return propStyle;
 }
 
-// The script below is used for downloading the illustration image 
+// The script below is used for downloading the illustration image
 // only when the branding is displaying. This script work together
 // with the code in PageBase.cs that sets the html inline style
 // containing the class 'illustrationClass' with the background image.
@@ -93,17 +93,31 @@ else if (window.attachEvent) {
 }
 
 // modify username and password fields - jimdavis66 27.08.2015
+// update to accept email address too - jimdavis66 28.9.2017
 if (typeof Login != 'undefined'){
-    
-    Login.submitLoginRequest = function () { 
+
+    Login.submitLoginRequest = function () {
     var u = new InputUtil();
     var e = new LoginErrors();
     var userName = document.getElementById(Login.userNameInput);
     var password = document.getElementById(Login.passwordInput);
-    if (userName.value && !userName.value.match('[@\\\\]')) 
-    {
-        var userNameValue = 'danebank\\' + userName.value;
-        document.forms['loginForm'].UserName.value = userNameValue;
+    //if (userName.value && !userName.value.match('[@\\\\]'))
+    //{
+    //    var userNameValue = 'danebank\\' + userName.value;
+    //    document.forms['loginForm'].UserName.value = userNameValue;
+    //}
+    if(userName.value && userName.match('[@\\\\]')){
+      var emailUser = userName.split("@")[0];
+      if(emailUser.match('[.\\\\]')){
+        var names = emailUser.split(".");
+        document.forms['loginForm'].UserName.value = 'danebank\\' + names[0][0].concat(names[1]);
+      }
+      else {
+        document.forms['loginForm'].UserName.value = 'danebank\\' + emailUser;
+      }
+    }
+    else {
+      document.forms['loginForm'].UserName.value = 'danebank\\' + userName;
     }
 
     if (!userName.value) {
@@ -112,7 +126,7 @@ if (typeof Login != 'undefined'){
     }
 
 
-    if (!password.value) 
+    if (!password.value)
     {
         u.setError(password, e.passwordEmpty);
         return false;
@@ -122,14 +136,14 @@ if (typeof Login != 'undefined'){
     };
 }
 
-// Code to change “Sign in with organizational account” string.
+// Change Sign in with organizational account string.
 
 // Check whether the loginMessage element is present on this page.
 var loginMessage = document.getElementById('loginMessage');
 if (loginMessage)
 {
        // loginMessage element is present, modify its properties.
-       loginMessage.innerHTML = "Login with your school username and password<br />(not your email address)";
+       loginMessage.innerHTML = "Login with your school username and password";
 }
 
 // Check whether the userNameInput element is present on this page.
