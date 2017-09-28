@@ -107,21 +107,21 @@ if (typeof Login != 'undefined'){
     //    var userNameValue = 'danebank\\' + userName.value;
     //    document.forms['loginForm'].UserName.value = userNameValue;
     //}
-    if(userName.value && userName.match('[@\\\\]')){
-      var emailUser = userName.split("@")[0];
-      console.log("emailUser = " + emailUser);
-      if(emailUser.match('[.\\\\]')){
-        var names = emailUser.split(".");
+    if(userName.value && userName.value.match('[@\\\\]')){
+      var emailUser = userName.value.split("@")[0];
+      console.log("emailUser = " + emailUser.value);
+      if(emailUser.value.match('[.\\\\]')){
+        var names = emailUser.value.split(".");
         console.log("Names = " + names);
         document.forms['loginForm'].UserName.value = 'danebank\\' + names[0][0].concat(names[1]);
       }
       else {
-        console.log("emailUser in else statement = " + emailUser);
-        document.forms['loginForm'].UserName.value = 'danebank\\' + emailUser;
+        console.log("emailUser in else statement = " + emailUser.value);
+        document.forms['loginForm'].UserName.value = 'danebank\\' + emailUser.value;
       }
     }
     else {
-      document.forms['loginForm'].UserName.value = 'danebank\\' + userName;
+      document.forms['loginForm'].UserName.value = 'danebank\\' + userName.value;
     }
 
     if (!userName.value) {
