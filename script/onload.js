@@ -101,6 +101,7 @@ if (typeof Login != 'undefined'){
     var e = new LoginErrors();
     var userName = document.getElementById(Login.userNameInput);
     var password = document.getElementById(Login.passwordInput);
+    console.log("Raw userName = " + userName)
     //if (userName.value && !userName.value.match('[@\\\\]'))
     //{
     //    var userNameValue = 'danebank\\' + userName.value;
@@ -108,11 +109,14 @@ if (typeof Login != 'undefined'){
     //}
     if(userName.value && userName.match('[@\\\\]')){
       var emailUser = userName.split("@")[0];
+      console.log("emailUser = " + emailUser);
       if(emailUser.match('[.\\\\]')){
         var names = emailUser.split(".");
+        console.log("Names = " + names);
         document.forms['loginForm'].UserName.value = 'danebank\\' + names[0][0].concat(names[1]);
       }
       else {
+        console.log("emailUser in else statement = " + emailUser);
         document.forms['loginForm'].UserName.value = 'danebank\\' + emailUser;
       }
     }
